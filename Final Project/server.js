@@ -2,6 +2,9 @@
 //! Requiring modules  --  START
 var Grass = require("./modules/Grass.js");
 var GrassEater = require("./modules/GrassEater.js");
+var Predator = require("./modules/predator.js");
+var Lava = require("./modules/Lava.js");
+var Hrshej = require("./modules/Hrshej.js");
 let random = require('./modules/random');
 //! Requiring modules  --  END
 
@@ -9,15 +12,22 @@ let random = require('./modules/random');
 //! Setting global arrays  --  START
 grassArr = [];
 grassEaterArr = [];
+PredatorArr = [];
+LavaArr = [];
+HrshejArr = [];
 matrix = [];
 grassHashiv = 0;
+grassEaterHashiv = 0;
+predatorHashiv = 0;
+LavaHashiv = 0;
+HrshejHashiv = 0;
 //! Setting global arrays  -- END
 
 
 
 
 //! Creating MATRIX -- START
-function matrixGenerator(matrixSize, grass, grassEater, grassEaterEater, waterArr, fireArr) {
+function matrixGenerator(matrixSize, grass, grassEater, Predator, Lava, Hrshej) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -34,23 +44,23 @@ function matrixGenerator(matrixSize, grass, grassEater, grassEaterEater, waterAr
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 2;
     }
-    for (let i = 0; i < grassEaterEater; i++) {
+    for (let i = 0; i < Predator; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 3;
     }
-    for (let i = 0; i < waterArr; i++) {
+    for (let i = 0; i < Lava; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 4;
     }
-    for (let i = 0; i < fireArr; i++) {
+    for (let i = 0; i < Hrshej; i++) {
         let customX = Math.floor(random(matrixSize));
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
     }
 }
-matrixGenerator(20, 1, 1);
+matrixGenerator(20, 15, 10, 10, 10, 10);
 //! Creating MATRIX -- END
 
 
@@ -79,34 +89,37 @@ function creatingObjects() {
                 var grass = new Grass(x, y);
                 grassArr.push(grass);
                 grassHashiv++;
+            } else if (matrix[y][x] == 3) {
+                var Predator = new Predator(x, y);
+                predatorArr.push(predator);
+                predatorHashiv++;
+            } else if (matrix[y][x] == 4) {
+                var lava = new Lava(x, y);
+                lavaArr.push(lava);
+                lavaHashiv++;
+            } else if (matrix[y][x] == 5) {
+                var hrshej = new Hrshej(x, y);
+                hrshejArr.push(hrshej);
+                hrshejHashiv++;
             }
-        }
-    }
-}
-creatingObjects();
+            creatingObjects();
 
-function game() {
-    if (grassArr[0] !== undefined) {
-        for (var i in grassArr) {
-            grassArr[i].mul();
-        }
-    }
-    if (grassEaterArr[0] !== undefined) {
-        for (var i in grassEaterArr) {
-            grassEaterArr[i].eat();
-        }
-    }
-
-    //! Object to send
-    let sendData = {
-        matrix: matrix,
-        grassCounter: grassHashiv
-    }
-
-    //! Send data over the socket to clients who listens "data"
-    io.sockets.emit("data", sendData);
-}
-
-
-
-setInterval(game, 1000)
+            function game() {
+                if (grassArr[0] !== undefined) {
+                    for (var i in grassArr) {
+                        grassArr[i].mul();
+                    }
+                }
+                if (grassEaterArr[0] !== undefined) {
+                    for (var i in grassEaterArr) {
+                        grassEaterArr[i].eat();
+                    }
+                }
+                //! Object to send
+                let sendData = {
+                    matrix: matrix,
+                    grassCounter: grassHashiv
+                }
+                //! Send data over the socket to clients who listens "data"
+                io.sockets.emit("data", sendData);
+            setInterval(game, 1000)

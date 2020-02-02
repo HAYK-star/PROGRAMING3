@@ -7,7 +7,7 @@ let lavaArr = [];
 let hrshejArr = [];
 
 function setup() {
-    matrixGenerator(100, 150, 100, 50, 10, 50);
+    matrixGenerator(20, 0, 0, 1, 0, 0);
     createCanvas(matrix[0].length * side, matrix.length * side);
     background('grey');
     frameRate(8);

@@ -226,7 +226,7 @@ class Predator {
         this.getNewDirections();
         let newCell = random(this.chooseCell(2));
         if (newCell) {
-            this.energy += 20;
+            this.energy += 30;
             let x = newCell[0];
             let y = newCell[1];
             matrix[y][x] = 3;
@@ -248,7 +248,7 @@ class Predator {
         else { this.move() }
     }
     move() {
-        this.energy--;
+        this.energy -= 5;
         let newCell = random(this.chooseCell(0).concat(this.chooseCell(1)));
         if (newCell) {
             let x = newCell[0];
@@ -420,11 +420,6 @@ class Lava {
                     }
                     if (this.energy < 0) {
                         this.die();
-                    }
-                    for (let index = 0; index < grassArr.length; index++) {
-                        if (grassArr[index].x == x && grassArr[index].y == y) {
-                            grassArr.splice(index, 1)
-                        }
                     }
                 }
             }

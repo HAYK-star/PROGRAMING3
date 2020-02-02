@@ -1,4 +1,6 @@
-   class Grass {
+
+
+class Grass {
 
     chooseCell(char) {
         let arr = [];
