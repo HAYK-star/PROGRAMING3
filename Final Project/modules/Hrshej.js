@@ -5,23 +5,24 @@ var random = require("./random.js");
 
 module.exports = class Hrshej extends LiveForm {
     constructor(x, y) {
+        
         this.x = x;
         this.y = y;
         this.energy = 30;
         
     }
-    getNewDirections() {
-        this.directions = [
-            [this.x - 1, this.y - 1],
-            [this.x, this.y - 1],
-            [this.x + 1, this.y - 1],
-            [this.x - 1, this.y],
-            [this.x + 1, this.y],
-            [this.x - 1, this.y + 1],
-            [this.x, this.y + 1],
-            [this.x + 1, this.y + 1]
-        ];
-    }
+    // getNewDirections() {
+    //     this.directions = [
+    //         [this.x - 1, this.y - 1],
+    //         [this.x, this.y - 1],
+    //         [this.x + 1, this.y - 1],
+    //         [this.x - 1, this.y],
+    //         [this.x + 1, this.y],
+    //         [this.x - 1, this.y + 1],
+    //         [this.x, this.y + 1],
+    //         [this.x + 1, this.y + 1]
+    //     ];
+    // }
     mul() {
         let newCell = random(this.chooseCell(0).concat(this.chooseCell(1)));
         if (newCell) {

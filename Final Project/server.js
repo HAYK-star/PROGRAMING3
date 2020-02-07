@@ -21,6 +21,8 @@ grassEaterHashiv = 0;
 predatorHashiv = 0;
 LavaHashiv = 0;
 HrshejHashiv = 0;
+weather = '';
+var counter = 0;
 //! Setting global arrays  -- END
 
 
@@ -90,7 +92,7 @@ function creatingObjects() {
                 grassArr.push(grass);
                 grassHashiv++;
             } else if (matrix[y][x] == 3) {
-                var Predator = new Predator(x, y);
+                var predator = new Predator(x, y);
                 predatorArr.push(predator);
                 predatorHashiv++;
             } else if (matrix[y][x] == 4) {
@@ -102,24 +104,30 @@ function creatingObjects() {
                 hrshejArr.push(hrshej);
                 hrshejHashiv++;
             }
-            creatingObjects();
 
-            function game() {
-                if (grassArr[0] !== undefined) {
-                    for (var i in grassArr) {
-                        grassArr[i].mul();
-                    }
-                }
-                if (grassEaterArr[0] !== undefined) {
-                    for (var i in grassEaterArr) {
-                        grassEaterArr[i].eat();
-                    }
-                }
-                //! Object to send
-                let sendData = {
-                    matrix: matrix,
-                    grassCounter: grassHashiv
-                }
-                //! Send data over the socket to clients who listens "data"
-                io.sockets.emit("data", sendData);
-            setInterval(game, 1000)
+
+        }
+    }
+}
+
+creatingObjects();
+function game() {
+    if (grassArr[0] !== undefined) {
+        for (var i in grassArr) {
+            grassArr[i].mul();
+        }
+    }
+    if (grassEaterArr[0] !== undefined) {
+        for (var i in grassEaterArr) {
+            grassEaterArr[i].eat();
+        }
+    }
+    //! Object to send
+    let sendData = {
+        matrix: matrix,
+        grassCounter: grassHashiv
+    }
+    //! Send data over the socket to clients who listens "data"
+    io.sockets.emit("data", sendData);
+}
+setInterval(game, 1000);
