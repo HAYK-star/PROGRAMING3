@@ -25,10 +25,12 @@ module.exports = class GrassEater extends LiveForm {
         return super.chooseCell(character);
     } 
     mul() {
+        grassEaterHashiv++;
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);
 
         if (newCell) {
+            
             let x = newCell[0];
             let y = newCell[1];
             matrix[y][x] = 2;
@@ -67,6 +69,8 @@ module.exports = class GrassEater extends LiveForm {
         }
     }
     move() {
+        
+        
         this.life--;
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);

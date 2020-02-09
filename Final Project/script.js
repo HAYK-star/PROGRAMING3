@@ -23,10 +23,10 @@ function setup() {
         //! after getting data pass it to matrix variable
         matrix = data.matrix;
         grassCountElement.innerText = data.grassCounter;
-        grassEaterCountElement.innerText = data.grassEaterCount
-        predatorCountElement.innerText = data.predatorCount
-        lavaCountElement.innerText = data.lavaCount
-        hrshejCountElement.innerText = data.hrshejCount
+        grassEaterCountElement.innerText = data.grassEaterCounter;
+        predatorCountElement.innerText = data.predatorCounter;
+        lavaCountElement.innerText = data.lavaCounter;
+        hrshejCountElement.innerText = data.hrshejCounter;
         //! Every time it creates new Canvas woth new matrix size
         createCanvas(matrix[0].length * side, matrix.length * side)
         //! clearing background by setting it to new grey color
@@ -40,7 +40,7 @@ function setup() {
                     fill("green");
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 2) {
-                    fill("orange");
+                    fill("yellow");
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 0) {
                     fill('#acacac');
@@ -49,10 +49,10 @@ function setup() {
                     fill('red');
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 4) {
-                    fill('blue');
+                    fill('orange');
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 5) {
-                    fill('yellow');
+                    fill("black");
                     rect(j * side, i * side, side, side);
                 }
             }

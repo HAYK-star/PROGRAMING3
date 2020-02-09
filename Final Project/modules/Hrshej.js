@@ -6,47 +6,45 @@ var random = require("./random.js");
 module.exports = class Hrshej extends LiveForm {
     constructor(x, y) {
         
-        this.x = x;
-        this.y = y;
-        this.energy = 30;
+        super(x,y);
+        this.life = 30;
         
     }
-    // getNewDirections() {
-    //     this.directions = [
-    //         [this.x - 1, this.y - 1],
-    //         [this.x, this.y - 1],
-    //         [this.x + 1, this.y - 1],
-    //         [this.x - 1, this.y],
-    //         [this.x + 1, this.y],
-    //         [this.x - 1, this.y + 1],
-    //         [this.x, this.y + 1],
-    //         [this.x + 1, this.y + 1]
-    //     ];
-    // }
+    getNewCoordinates() {
+        this.directions = [
+            [this.x - 1, this.y - 1],
+            [this.x, this.y - 1],
+            [this.x + 1, this.y - 1],
+            [this.x - 1, this.y],
+            [this.x + 1, this.y],
+            [this.x - 1, this.y + 1],
+            [this.x, this.y + 1],
+            [this.x + 1, this.y + 1]
+        ];
+    }
+    chooseCell(character) {
+        this.getNewCoordinates();
+        return super.chooseCell(character);
+    } 
     mul() {
+        
         let newCell = random(this.chooseCell(0).concat(this.chooseCell(1)));
         if (newCell) {
+            hrshejHashiv++; 
             let x = newCell[0];
             let y = newCell[1];
             matrix[y][x] = 5;
             let hrshej = new Hrshej(x, y);
             hrshejArr.push(hrshej);
-            this.energy = 0;
+            this.life = 5;
         }
     }
-    die() {
-        matrix[this.y][this.x] = 0;
-        for (let index = 0; index < hrshejArr.length; index++) {
-            if (hrshejArr[index].x == this.x && hrshejArr[index].y == this.y) {
-                hrshejArr.splice(index, 1)
-            }
-        }
-    }
+   
     eat() {
-        this.getNewDirections();
+        this.getNewCoordinates();
         let newCell = random(this.chooseCell(2).concat(this.chooseCell(4)));
         if (newCell) {
-            this.energy += 20;
+            this.life += 20;
             let x = newCell[0];
             let y = newCell[1];
             matrix[y][x] = 5;
@@ -65,15 +63,18 @@ module.exports = class Hrshej extends LiveForm {
                     lavaArr.splice(index, 1)
                 }
             }
-            if (this.energy > 120) {
+            if (this.life > 120) {
                 this.mul()
             }
         }
         else { this.move() }
     }
     move() {
-        this.energy--;
-        let newCell = random(this.chooseCell(0).concat(this.chooseCell(1)));
+        
+        
+        this.life--;
+        let emptyCells = this.chooseCell(this.chooseCell(0).concat(this.chooseCell(1)));
+        let newCell = random(emptyCells);
         if (newCell) {
             let x = newCell[0];
             let y = newCell[1];
@@ -82,11 +83,19 @@ module.exports = class Hrshej extends LiveForm {
             this.y = y;
             this.x = x;
         }
-        if (newCell && this.energy < 0) {
+        if (newCell && this.life < 0) {
             this.die();
         }
-        if (this.energy < 0) {
+        if (this.life < 0) {
             this.die();
+        }
+    }
+     die() {
+        matrix[this.y][this.x] = 0;
+        for (let index = 0; index < hrshejArr.length; index++) {
+            if (hrshejArr[index].x == this.x && hrshejArr[index].y == this.y) {
+                hrshejArr.splice(index, 1)
+            }
         }
     }
 }

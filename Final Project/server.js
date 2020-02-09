@@ -12,15 +12,15 @@ let random = require('./modules/random');
 //! Setting global arrays  --  START
 grassArr = [];
 grassEaterArr = [];
-PredatorArr = [];
-LavaArr = [];
-HrshejArr = [];
+predatorArr = [];
+lavaArr = [];
+hrshejArr = [];
 matrix = [];
 grassHashiv = 0;
 grassEaterHashiv = 0;
 predatorHashiv = 0;
-LavaHashiv = 0;
-HrshejHashiv = 0;
+lavaHashiv = 0;
+hrshejHashiv = 0;
 weather = '';
 var counter = 0;
 //! Setting global arrays  -- END
@@ -87,6 +87,7 @@ function creatingObjects() {
             if (matrix[y][x] == 2) {
                 var grassEater = new GrassEater(x, y);
                 grassEaterArr.push(grassEater);
+                grassEaterHashiv++; 
             } else if (matrix[y][x] == 1) {
                 var grass = new Grass(x, y);
                 grassArr.push(grass);
@@ -122,11 +123,32 @@ function game() {
             grassEaterArr[i].eat();
         }
     }
+    if (predatorArr[0] !== undefined) {
+        for (var i in predatorArr) {
+            predatorArr[i].eat();
+        }
+    }
+    if (lavaArr[0] !== undefined) {
+        for (var i in lavaArr) {
+            lavaArr[i].mul();
+        }
+    }
+    if (hrshejArr[0] !== undefined) {
+        for (var i in hrshejArr) {
+            hrshejArr[i].eat();
+        }
+    }
     //! Object to send
     let sendData = {
         matrix: matrix,
-        grassCounter: grassHashiv
+        grassCounter: grassHashiv,
+        grassEaterCounter: grassEaterHashiv,
+        predatorCounter: predatorHashiv,
+        lavaCounter: lavaHashiv,
+        hrshejCounter: hrshejHashiv
     }
+
+    
     //! Send data over the socket to clients who listens "data"
     io.sockets.emit("data", sendData);
 }

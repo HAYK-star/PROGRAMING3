@@ -1,5 +1,5 @@
 var LiveForm = require("./LiveForm");
-var random = require("./random");
+var random = require("./random.js");
 
 
 module.exports = class Grass extends LiveForm {
