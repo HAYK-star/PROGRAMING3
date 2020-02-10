@@ -62,10 +62,8 @@ function matrixGenerator(matrixSize, grass, grassEater, Predator, Lava, Hrshej) 
         matrix[customY][customX] = 5;
     }
 }
-matrixGenerator(20, 15, 10, 10, 10, 10);
+matrixGenerator(20, 15, 20, 10, 10, 10);
 //! Creating MATRIX -- END
-
-
 
 //! SERVER STUFF  --  START
 var express = require('express');
