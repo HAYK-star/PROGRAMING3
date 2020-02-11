@@ -24,7 +24,7 @@ module.exports = class Hrshej extends LiveForm {
     }
     chooseCell(character) {
         this.getNewCoordinates();
-        return super.chooseCell(Live);
+        return super.chooseCell();
     } 
     mul() {
         
